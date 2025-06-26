@@ -1,6 +1,9 @@
 import { Flex } from "@mantine/core";
 import { Authorized } from "~/modules";
 
+// Force dynamic rendering for admin pages
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardPage() {
     return (
         <Authorized role={"Admin"} redirectHome>

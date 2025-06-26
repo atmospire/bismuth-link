@@ -5,6 +5,9 @@ import { DiscordLoginOverlay, MicrosoftLoginOverlay, ServerCard } from "~/module
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 
+// Force dynamic rendering to prevent prerendering during build
+export const dynamic = "force-dynamic";
+
 async function unlinkMicrosoft(data: FormData) {
     "use server";
 
