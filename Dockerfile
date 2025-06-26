@@ -17,10 +17,6 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
-# Generate Prisma client with a dummy DATABASE_URL
-ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
-RUN npx prisma generate
-
 ##### BUILDER
 
 FROM --platform=linux/amd64 node:20-alpine AS builder
@@ -31,6 +27,9 @@ COPY . .
 
 # Use dummy DATABASE_URL for build process
 ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
+
+# Generate Prisma client for the target debian platform
+RUN npx prisma generate
 
 # ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -53,6 +52,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 COPY --from=builder /app/next.config* ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
+
+# Copy Prisma client with the correct binaries
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
