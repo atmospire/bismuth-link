@@ -1,0 +1,23 @@
+.roleBadge {
+    transition: all 0.3s;
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+.roleBadge:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.logout {
+    transition: all 0.3s;
+}
+
+.logout:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}

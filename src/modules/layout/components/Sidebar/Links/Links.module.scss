@@ -1,0 +1,17 @@
+.link[data-active] {
+    span {
+        color: var(--mantine-color-primary-5);
+    }
+
+}
+
+.link {
+    transition: all 0.3s;
+    border-radius: 0.3rem;
+
+    // This changed the label
+    span {
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+}

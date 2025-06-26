@@ -1,0 +1,25 @@
+.logo {
+    font-size: 2.75rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin: 0;
+    background: linear-gradient(to right, var(--mantine-color-primary-7), var(--mantine-color-primary-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s;
+    filter: drop-shadow(0 0 0.3rem black);
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+.logo:hover {
+    transition: all 0.3s;
+    transform: scale(1.05);
+    cursor: pointer;
+}

@@ -1,0 +1,45 @@
+"use client";
+
+import { BackgroundImage, Flex, Loader, Text, Tooltip } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+
+import styles from "./Banner.module.scss";
+
+export function Banner() {
+    // fetch randomfunny api using react query
+
+    const { data: randomFunny, isLoading } = useQuery({
+        queryKey: ["randomFunny"],
+        queryFn: async () => {
+            const response = await fetch("/api/randomFunny");
+            if (!response.ok) throw new Error("Failed to fetch");
+            return (await response.json()) as { text: string; author: string };
+        },
+    });
+
+    return (
+        <>
+            <BackgroundImage src={"/img/grask.webp"}>
+                <Flex
+                    w={"100%"}
+                    h={"20rem"}
+                    style={{ flexGrow: 1 }}
+                    direction={"column"}
+                    justify={"center"}
+                    align={"center"}
+                >
+                    <Text className={styles.title}>Welcome to the Flower Garden</Text>
+                    {isLoading ? (
+                        <Loader type="dots" />
+                    ) : (
+                        <Tooltip label={`Submitted by: ${randomFunny?.author}`} position="bottom" withArrow>
+                            <Text className={styles.undertitle}>
+                                &quot;{randomFunny?.text.replaceAll('"', "")}&quot;
+                            </Text>
+                        </Tooltip>
+                    )}
+                </Flex>
+            </BackgroundImage>
+        </>
+    );
+}

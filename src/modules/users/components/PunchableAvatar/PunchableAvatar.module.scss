@@ -1,0 +1,25 @@
+.avatar {
+    transition: all 0.3s;
+
+    img {
+        user-drag: none;
+        -webkit-user-drag: none;
+        -moz-user-select: none;
+    }
+
+    user-drag: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+.avatar:hover {
+    transform: scale(1.05) rotate(5deg);
+    cursor: pointer;
+}
