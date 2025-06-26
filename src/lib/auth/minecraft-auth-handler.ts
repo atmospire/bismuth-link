@@ -1,14 +1,5 @@
 // https://gist.github.com/Plagiatus/ce5f18bc010395fc45d8553905e10f55
 
-interface AuthorizationTokenResponse {
-    token_type: string;
-    expires_in: number;
-    scope: string;
-    access_token: string;
-    refresh_token: string;
-    user_id: string;
-}
-
 interface XboxServiceTokenResponse {
     IssueInstant: string;
     NotAfter: string;
@@ -22,6 +13,14 @@ interface MCTokenResponse {
     access_token: string;
     token_type: string;
     expires_in: number;
+}
+
+interface XboxProfileResponse {
+    profileUsers: Array<{
+        settings: Array<{
+            value: string;
+        }>;
+    }>;
 }
 
 interface MinecraftAsset {
@@ -111,7 +110,7 @@ export default class AuthenticationHandler {
             const errorBody = await response.text();
             throw new Error(`Failed to exchange MSA token for XBL. Status: ${response.status}, Body: ${errorBody}`);
         }
-        return response.json();
+        return response.json() as Promise<XboxServiceTokenResponse>;
     }
 
     /**
@@ -142,7 +141,7 @@ export default class AuthenticationHandler {
                 `Failed to get XSTS token for ${relyingParty}. Status: ${response.status}, Body: ${errorBody}`,
             );
         }
-        return response.json();
+        return response.json() as Promise<XboxServiceTokenResponse>;
     }
 
     /**
@@ -157,7 +156,7 @@ export default class AuthenticationHandler {
             console.log("--> Xbox Flow: Getting profile...");
             const response = await fetch("https://profile.xboxlive.com/users/me/profile/settings?settings=Gamertag", {
                 headers: {
-                    Authorization: `XBL3.0 x=${xsts.DisplayClaims.xui[0].uhs};${xsts.Token}`,
+                    Authorization: `XBL3.0 x=${xsts.DisplayClaims.xui[0]?.uhs};${xsts.Token}`,
                     "x-xbl-contract-version": "2",
                     Accept: "application/json",
                 },
@@ -167,9 +166,9 @@ export default class AuthenticationHandler {
                 console.error(`--> Xbox Flow: FAILED to get profile. Status: ${response.status}, Body: ${errorBody}`);
                 return null;
             }
-            const data = await response.json();
+            const data = (await response.json()) as XboxProfileResponse;
             console.log("--> Xbox Flow: SUCCESS getting profile.");
-            return data.profileUsers[0].settings[0].value;
+            return data.profileUsers[0]?.settings[0]?.value ?? null;
         } catch (error) {
             console.error("--> Xbox Flow: An unexpected error occurred.", error);
             return null;
@@ -193,7 +192,7 @@ export default class AuthenticationHandler {
                     Accept: "application/json",
                 },
                 body: JSON.stringify({
-                    identityToken: `XBL3.0 x=${xsts.DisplayClaims.xui[0].uhs};${xsts.Token}`,
+                    identityToken: `XBL3.0 x=${xsts.DisplayClaims.xui[0]?.uhs};${xsts.Token}`,
                 }),
             });
             if (!mcAuthResponse.ok) {
@@ -203,7 +202,7 @@ export default class AuthenticationHandler {
                 );
                 return null;
             }
-            const mcToken = await mcAuthResponse.json();
+            const mcToken = (await mcAuthResponse.json()) as MCTokenResponse;
             console.log("--> Minecraft Flow: SUCCESS logging in.");
 
             console.log("--> Minecraft Flow: Getting profile...");
@@ -220,7 +219,7 @@ export default class AuthenticationHandler {
                 return null;
             }
             console.log("--> Minecraft Flow: SUCCESS getting profile.");
-            return mcProfileResponse.json();
+            return mcProfileResponse.json() as Promise<MCUserInfo>;
         } catch (error) {
             console.error("--> Minecraft Flow: An unexpected error occurred.", error);
             return null;

@@ -29,7 +29,7 @@ export function Layout({ children }: PropsWithChildren) {
                             </AppShell.Header>
                         )}
 
-                        <AppShell.Main>
+                        <AppShell.Main style={{ height: "calc(100vh - 5rem)" }}>
                             {state.container && (
                                 <Container fluid size={"xl"} pt={"xs"} w={"100%"} h={"100%"}>
                                     {children}

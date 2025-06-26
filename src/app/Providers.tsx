@@ -53,7 +53,7 @@ export default function Providers({ children }: { children: ReactNode }) {
                 <ReactQueryDevtools position="right" />
                 <SessionProvider refetchInterval={0.5 * 60} refetchOnWindowFocus={false}>
                     <MantineProvider forceColorScheme="dark" theme={theme}>
-                        <Notifications position="top-center" autoClose={5000} />
+                        <Notifications position="top-center" autoClose={3000} />
                         <ModalsProvider>{children}</ModalsProvider>
                     </MantineProvider>
                 </SessionProvider>

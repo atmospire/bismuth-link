@@ -19,10 +19,10 @@ export function Banner() {
 
     return (
         <>
-            <BackgroundImage src={"/img/grask.webp"}>
+            <BackgroundImage src={"/img/grask.webp"} h={"100%"}>
                 <Flex
                     w={"100%"}
-                    h={"20rem"}
+                    h={"100%"}
                     style={{ flexGrow: 1 }}
                     direction={"column"}
                     justify={"center"}

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Flex, Text } from "@mantine/core";
 import { Routes } from "~/constants/routes";
+import { env } from "~/env";
 
 import styles from "./Logo.module.scss";
 
@@ -13,7 +14,7 @@ interface LogoOptions {
 export function Logo({ goHomeOnClick = true }: LogoOptions) {
     const router = useRouter();
 
-    const title = "FlowerOnline";
+    const title = env.NEXT_PUBLIC_APP_NAME;
 
     // Should be a one in 143 chance
     // const maxMiku = 143;

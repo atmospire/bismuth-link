@@ -14,9 +14,7 @@ export default function Home() {
             align={"center"}
             style={{ flexGrow: 1 }}
         >
-            <Flex direction={"column"} gap={"xs"} w={"100%"}>
-                <Banner />
-            </Flex>
+            <Banner />
         </Flex>
     );
 }

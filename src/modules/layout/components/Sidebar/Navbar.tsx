@@ -25,7 +25,7 @@ export function Navbar() {
                 <Links />
             </Flex>
 
-            <Flex align={"center"}>
+            <Flex align={"center"} gap={"sm"}>
                 <AdminLinks />
                 <CurrentUser />
             </Flex>

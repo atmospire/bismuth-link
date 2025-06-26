@@ -1,32 +1,30 @@
-import { redirect } from "next/navigation";
+"use client";
+
 import { Button, Container, Flex, Group, Text, TextInput, Title } from "@mantine/core";
-import { Routes } from "~/constants/routes";
-import { DiscordLoginOverlay, MicrosoftLoginOverlay, ServerCard } from "~/modules";
-import { auth, signOut } from "~/server/auth";
-import { db } from "~/server/db";
+import { useForm } from "@mantine/form";
+import { DiscordLoginOverlay, LoadOverlay, useCreateFunny, useFunnies } from "~/modules";
+import { useSession } from "next-auth/react";
 
-export default async function FunniesPage() {
-    const session = await auth();
+export default function FunniesPage() {
+    const { data: session, status } = useSession({ required: false });
 
-    if (session == null) return <DiscordLoginOverlay />;
+    const { data: funnies, isLoading } = useFunnies();
+    const { mutate } = useCreateFunny();
 
-    const funnies = await db.randomFunny.findMany({
-        include: {
-            submittedByUser: true,
+    const form = useForm({
+        mode: "uncontrolled",
+        initialValues: {
+            text: "",
         },
     });
 
+    if (isLoading || status === "loading") return <LoadOverlay visible />;
+    console.dir(funnies);
+
+    if (session == null) return <DiscordLoginOverlay />;
+
     return (
-        <Flex
-            direction={"column"}
-            w={"100%"}
-            h={"100%"}
-            gap={"xs"}
-            justify={"center"}
-            align={"center"}
-            style={{ flexGrow: 1 }}
-            p={"lg"}
-        >
+        <Flex direction={"column"} w={"100%"} h={"100%"} gap={"xs"} align={"center"} style={{ flexGrow: 1 }} p={"lg"}>
             <Container w={"100%"}>
                 <Flex direction={"column"} gap={"xs"} w={"100%"}>
                     <Title>Page of funnies</Title>
@@ -36,14 +34,28 @@ export default async function FunniesPage() {
                     </Text>
 
                     <Text>Maximum size of a funny is 64 characters.</Text>
-                    <Group grow preventGrowOverflow wrap="nowrap">
-                        <TextInput maxLength={64} name="funnyText" placeholder="insert funny here" />
-                        <Button type="submit">Add a funny</Button>
-                    </Group>
+                    <form
+                        onSubmit={form.onSubmit((values) => {
+                            form.reset();
+                            mutate(values.text);
+                        })}
+                    >
+                        <Group grow preventGrowOverflow wrap="nowrap">
+                            <TextInput
+                                maxLength={64}
+                                name="funnyText"
+                                placeholder="insert funny here"
+                                key={form.key("text")}
+                                {...form.getInputProps("text")}
+                            />
+                            <Button type="submit">Add a funny</Button>
+                        </Group>
+                    </form>
                     <Title order={2} mt={"xl"}>
                         Current funnies:
                     </Title>
-                    {funnies.map((funny, index) => (
+                    {funnies?.length == 0 && <Text>No funnies created yet :(</Text>}
+                    {funnies?.map((funny, index) => (
                         <Text key={index}>
                             [{funny.funnyText}] by {funny.submittedByUser.name}
                         </Text>

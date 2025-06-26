@@ -25,6 +25,7 @@ export const env = createEnv({
      */
     client: {
         // NEXT_PUBLIC_CLIENTVAR: z.string(),
+        NEXT_PUBLIC_APP_NAME: z.string(),
     },
 
     /**
@@ -32,6 +33,7 @@ export const env = createEnv({
      * middlewares) or client-side so we need to destruct manually.
      */
     runtimeEnv: {
+        NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
         AUTH_SECRET: process.env.AUTH_SECRET,
         AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
         AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { Button, Container, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
 import { Routes } from "~/constants/routes";
 import { DiscordLoginOverlay, MicrosoftLoginOverlay, ServerCard } from "~/modules";
-import { auth, signOut } from "~/server/auth";
+import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 
 async function unlinkMicrosoft(data: FormData) {
@@ -51,16 +51,7 @@ export default async function LinkingPage() {
     const isUserLinked = accounts.find((x) => x.provider == "microsoft");
 
     return (
-        <Flex
-            direction={"column"}
-            w={"100%"}
-            h={"100%"}
-            gap={"xs"}
-            justify={"center"}
-            align={"center"}
-            style={{ flexGrow: 1 }}
-            p={"lg"}
-        >
+        <Flex direction={"column"} w={"100%"} h={"100%"} gap={"xs"} align={"center"} style={{ flexGrow: 1 }} p={"lg"}>
             {!isUserLinked ? (
                 <MicrosoftLoginOverlay />
             ) : (
