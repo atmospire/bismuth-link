@@ -4,6 +4,9 @@ FROM --platform=linux/amd64 node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
+# Copy Prisma schema first
+COPY prisma ./prisma
+
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml\* ./
 
@@ -14,23 +17,20 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
-# Copy Prisma schema and generate client with a dummy DATABASE_URL
-COPY prisma ./
-# Set a dummy DATABASE_URL for schema validation and client generation
+# Generate Prisma client with a dummy DATABASE_URL
 ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
 RUN npx prisma generate
 
 ##### BUILDER
 
 FROM --platform=linux/amd64 node:20-alpine AS builder
-ARG DATABASE_URL
 ARG NEXT_PUBLIC_CLIENTVAR
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set DATABASE_URL environment variable from ARG
-ENV DATABASE_URL=$DATABASE_URL
+# Use dummy DATABASE_URL for build process
+ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
 
 # ENV NEXT_TELEMETRY_DISABLED 1
 
