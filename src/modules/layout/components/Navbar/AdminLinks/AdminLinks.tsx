@@ -1,7 +1,8 @@
 "use client";
 
 import React, { type JSX } from "react";
-import AdminLink from "next/link";
+import type AdminLink from "next/link";
+import Link from "next/link";
 import { ActionIcon, Menu } from "@mantine/core";
 import { IconLayoutDashboard, IconSpiral, IconUsersGroup } from "@tabler/icons-react";
 import { Routes } from "~/constants/routes";
@@ -15,23 +16,23 @@ interface AdminLink {
     href: string;
 }
 
+export const adminLinks = (iconSize = 24): AdminLink[] => [
+    {
+        icon: <IconLayoutDashboard size={iconSize} />,
+        label: "Dashboard",
+        href: Routes.ADMIN_DASHBOARD,
+    },
+    {
+        icon: <IconUsersGroup size={iconSize} />,
+        label: "Users",
+        href: Routes.ADMIN_USERS,
+    },
+];
+
 /**
  * Renders admin links for sidebar
  */
 export function AdminLinks() {
-    const adminLinks: AdminLink[] = [
-        {
-            icon: <IconLayoutDashboard />,
-            label: "Dashboard",
-            href: Routes.ADMIN_DASHBOARD,
-        },
-        {
-            icon: <IconUsersGroup />,
-            label: "Users",
-            href: Routes.ADMIN_USERS,
-        },
-    ];
-
     return (
         <>
             <Authorized role={"Admin"}>
@@ -43,14 +44,14 @@ export function AdminLinks() {
                     </Menu.Target>
                     <Menu.Dropdown>
                         <Menu.Label>Admin Menu</Menu.Label>
-                        {adminLinks.map((link, index) => (
+                        {adminLinks().map((link, index) => (
                             <Menu.Item
                                 key={index}
                                 className={style.link}
                                 href={link.href}
                                 leftSection={link.icon}
                                 variant={"subtle"}
-                                component={AdminLink}
+                                component={Link}
                             >
                                 {link.label}
                             </Menu.Item>

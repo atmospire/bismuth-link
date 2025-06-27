@@ -15,35 +15,35 @@ interface Link {
     href: string;
 }
 
+// Links that probably every user should see, e.g. dashboard
+export const links = (iconSize = 24): Link[] => [
+    {
+        icon: <IconHome size={iconSize} />,
+        label: "Home",
+        href: Routes.HOME,
+    },
+    {
+        icon: <IconLink size={iconSize} />,
+        label: "Link",
+        href: Routes.LINKING,
+    },
+    {
+        icon: <IconJoker size={iconSize} />,
+        label: "Funnies",
+        href: Routes.FUNNY,
+    },
+];
+
 /**
  * Renders links for sidebar
  */
 export function Links() {
     const pathname = usePathname();
 
-    // Links that probably every user should see, e.g. dashboard
-    const links: Link[] = [
-        {
-            icon: <IconHome />,
-            label: "Home",
-            href: Routes.HOME,
-        },
-        {
-            icon: <IconLink />,
-            label: "Link",
-            href: Routes.LINKING,
-        },
-        {
-            icon: <IconJoker />,
-            label: "Funnies",
-            href: Routes.FUNNY,
-        },
-    ];
-
     return (
         <>
             <Flex direction={"row"} gap={"xs"}>
-                {links.map((link, index) => (
+                {links().map((link, index) => (
                     <Flex key={index} gap={"xs"}>
                         <NavLink
                             className={style.link}
