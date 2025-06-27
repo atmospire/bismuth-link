@@ -1,8 +1,8 @@
 "use client";
 
-import { ActionIcon, Badge, Box, Flex, Text } from "@mantine/core";
+import { ActionIcon, Badge, Box, Flex, Menu, Text } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
-import { useConfirmModal, useRoleColor } from "~/modules";
+import { useConfirmModal, useIsMobile, useRoleColor } from "~/modules";
 import { signOut, useSession } from "next-auth/react";
 
 import { PunchableAvatar } from "../PunchableAvatar";
@@ -13,6 +13,8 @@ import styles from "./CurrentUser.module.scss";
  */
 export function CurrentUser() {
     const { data } = useSession({ required: false });
+    const isMobile = useIsMobile();
+
     const user = data?.user;
 
     const { openConfirmModal } = useConfirmModal({
@@ -36,13 +38,18 @@ export function CurrentUser() {
     return (
         <>
             <Box>
-                <Flex direction={"row"} align={"center"} gap={"xs"}>
-                    <Flex align={"center"} gap={"sm"}>
-                        <ActionIcon onClick={logout} className={styles.logout} variant="transparent">
-                            <IconLogout size={iconSize} />
-                        </ActionIcon>
-                        <Flex direction={"column"}>
-                            <Text fw={"600"}>{user?.name}</Text>
+                <Flex align={"center"} p={"xs"}>
+                    <Flex align={"center"} gap={"sm"} w={"100%"}>
+                        {!isMobile && (
+                            <ActionIcon onClick={logout} className={styles.logout} variant="transparent">
+                                <IconLogout size={iconSize} />
+                            </ActionIcon>
+                        )}
+
+                        <Flex direction={"column"} w={"100%"}>
+                            <Text fw={"600"} size={isMobile ? "sm" : "initial"}>
+                                {user?.name}
+                            </Text>
                             <Badge className={styles.roleBadge} size="xs" color={roleColor}>
                                 {user?.role}
                             </Badge>
@@ -58,6 +65,14 @@ export function CurrentUser() {
                         />
                     </Flex>
                 </Flex>
+                {isMobile && (
+                    <>
+                        <Menu.Divider />
+                        <Menu.Item onClick={() => logout()} leftSection={<IconLogout size={14} />}>
+                            Logout
+                        </Menu.Item>
+                    </>
+                )}
             </Box>
         </>
     );

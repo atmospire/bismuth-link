@@ -6,8 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import styles from "./Banner.module.scss";
 
 export function Banner() {
-    // fetch randomfunny api using react query
-
     const { data: randomFunny, isLoading } = useQuery({
         queryKey: ["randomFunny"],
         queryFn: async () => {
@@ -32,7 +30,12 @@ export function Banner() {
                     {isLoading ? (
                         <Loader type="dots" />
                     ) : (
-                        <Tooltip label={`Submitted by: ${randomFunny?.author}`} position="bottom" withArrow>
+                        <Tooltip
+                            events={{ hover: true, focus: false, touch: true }}
+                            label={`Submitted by: ${randomFunny?.author}`}
+                            position="bottom"
+                            withArrow
+                        >
                             <Text className={styles.undertitle}>
                                 &quot;{randomFunny?.text.replaceAll('"', "")}&quot;
                             </Text>
