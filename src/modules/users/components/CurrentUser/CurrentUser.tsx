@@ -60,7 +60,8 @@ export function CurrentUser({ mobileView = false }: CurrentUserOptions) {
 
                         <PunchableAvatar
                             src={user?.image ?? ""}
-                            spread={180}
+                            soundUrl={"/sfx/confetti.mp3"}
+                            spread={360}
                             angle={225}
                             gravity={1}
                             shapes={["circle", "square"]}
