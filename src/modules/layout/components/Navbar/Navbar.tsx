@@ -27,7 +27,7 @@ export function Navbar() {
         >
             {!isMobile ? (
                 <>
-                    <Flex align={"center"} gap={"sm"}>
+                    <Flex align={"center"} gap={"xl"} ps={"md"}>
                         <Logo />
                         <Links />
                     </Flex>
@@ -38,7 +38,7 @@ export function Navbar() {
                     </Flex>
                 </>
             ) : (
-                <Flex justify={"space-between"} align={"center"} w={"100%"}>
+                <Flex justify={"space-between"} align={"center"} w={"100%"} px={"md"}>
                     <Logo />
                     <MobileMenu />
                 </Flex>

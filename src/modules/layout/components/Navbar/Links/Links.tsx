@@ -54,7 +54,7 @@ export function Links() {
                             active={pathname == link.href}
                             component={Link}
                         />
-                        {index < links.length - 1 && <Divider orientation="vertical" />}
+                        {index < links().length - 1 && <Divider orientation="vertical" />}
                     </Flex>
                 ))}
             </Flex>

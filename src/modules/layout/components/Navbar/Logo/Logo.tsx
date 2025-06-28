@@ -29,7 +29,7 @@ export function Logo({ goHomeOnClick = true }: LogoOptions) {
 
     return (
         <>
-            <Flex justify={"center"} align={"center"} h={"100%"} gap={"xs"} p={"md"}>
+            <Flex justify={"center"} align={"center"} h={"100%"} gap={"xs"}>
                 <Text
                     className={styles.logo}
                     onClick={() => {

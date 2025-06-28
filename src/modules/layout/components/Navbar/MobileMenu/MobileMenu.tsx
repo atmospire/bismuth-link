@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ActionIcon, Menu } from "@mantine/core";
+import { Menu } from "@mantine/core";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { Authorized } from "~/modules/users";
 import { useSession } from "next-auth/react";
@@ -57,7 +57,7 @@ export function MobileMenu() {
                 {session && (
                     <>
                         <Menu.Divider />
-                        <CurrentUser />
+                        <CurrentUser mobileView />
                     </>
                 )}
             </Menu.Dropdown>

@@ -2,18 +2,21 @@
 
 import { ActionIcon, Badge, Box, Flex, Menu, Text } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
-import { useConfirmModal, useIsMobile, useRoleColor } from "~/modules";
+import { useConfirmModal, useRoleColor } from "~/modules";
 import { signOut, useSession } from "next-auth/react";
 
 import { PunchableAvatar } from "../PunchableAvatar";
 import styles from "./CurrentUser.module.scss";
 
+interface CurrentUserOptions {
+    mobileView?: boolean;
+}
+
 /**
  * Component rendering currently signed-in user.
  */
-export function CurrentUser() {
+export function CurrentUser({ mobileView = false }: CurrentUserOptions) {
     const { data } = useSession({ required: false });
-    const isMobile = useIsMobile();
 
     const user = data?.user;
 
@@ -40,14 +43,14 @@ export function CurrentUser() {
             <Box>
                 <Flex align={"center"} p={"xs"}>
                     <Flex align={"center"} gap={"sm"} w={"100%"}>
-                        {!isMobile && (
+                        {!mobileView && (
                             <ActionIcon onClick={logout} className={styles.logout} variant="transparent">
                                 <IconLogout size={iconSize} />
                             </ActionIcon>
                         )}
 
                         <Flex direction={"column"} w={"100%"}>
-                            <Text fw={"600"} size={isMobile ? "sm" : "initial"}>
+                            <Text fw={"600"} size={mobileView ? "sm" : "initial"}>
                                 {user?.name}
                             </Text>
                             <Badge className={styles.roleBadge} size="xs" color={roleColor}>
@@ -65,7 +68,7 @@ export function CurrentUser() {
                         />
                     </Flex>
                 </Flex>
-                {isMobile && (
+                {mobileView && (
                     <>
                         <Menu.Divider />
                         <Menu.Item onClick={() => logout()} leftSection={<IconLogout size={14} />}>
