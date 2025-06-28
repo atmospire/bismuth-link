@@ -69,13 +69,24 @@ export default async function LinkingPage() {
 
                             <Text>
                                 Java Username:{" "}
-                                <Text span c="primary">
-                                    {session.user.javaName.length == 0
-                                        ? "[WORK IN PROGRESS, SORRY]"
-                                        : session.user.javaName}
-                                </Text>
+                                {session.user.javaName.length == 0 ? (
+                                    "[No Java Account]"
+                                ) : (
+                                    <Text span c="primary">
+                                        {session.user.javaName}
+                                    </Text>
+                                )}
                             </Text>
-                            <Text>Bedrock Username: {session.user.bedrockName}</Text>
+                            <Text>
+                                Bedrock Username:{" "}
+                                {session.user.bedrockName.length == 0 ? (
+                                    "[No Bedrock Account]"
+                                ) : (
+                                    <Text span c="primary">
+                                        {session.user.bedrockName}
+                                    </Text>
+                                )}
+                            </Text>
                         </Flex>
 
                         <form action={unlinkMicrosoft}>
