@@ -4,9 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "@mantine/core";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconBrandDiscord, IconMenu2, IconX } from "@tabler/icons-react";
 import { Authorized } from "~/modules/users";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import { CurrentUser } from "../../../../users/components/CurrentUser/CurrentUser";
 import { adminLinks } from "../AdminLinks";
@@ -54,11 +54,12 @@ export function MobileMenu() {
                         </Menu.Item>
                     ))}
                 </Authorized>
-                {session && (
-                    <>
-                        <Menu.Divider />
-                        <CurrentUser mobileView />
-                    </>
+                <Menu.Divider />
+                {session && <CurrentUser mobileView />}
+                {!session && (
+                    <Menu.Item onClick={() => signIn("discord")} leftSection={<IconBrandDiscord size={14} />}>
+                        Sign in
+                    </Menu.Item>
                 )}
             </Menu.Dropdown>
         </Menu>

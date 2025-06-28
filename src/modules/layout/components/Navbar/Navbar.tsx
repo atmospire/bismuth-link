@@ -1,8 +1,10 @@
 "use client";
 
-import { Flex } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
+import { IconBrandDiscord } from "@tabler/icons-react";
 import { useIsMobile } from "~/modules/system";
 import { CurrentUser } from "~/modules/users";
+import { signIn, useSession } from "next-auth/react";
 
 import { AdminLinks } from "./AdminLinks/AdminLinks";
 import { Links } from "./Links";
@@ -11,6 +13,7 @@ import { MobileMenu } from "./MobileMenu";
 import classes from "./Navbar.module.scss";
 
 export function Navbar() {
+    const { data: session } = useSession({ required: false });
     const isMobile = useIsMobile();
 
     return (
@@ -35,6 +38,11 @@ export function Navbar() {
                     <Flex align={"center"} gap={"sm"}>
                         <AdminLinks />
                         <CurrentUser />
+                        {!session && (
+                            <Button onClick={() => signIn("discord")} leftSection={<IconBrandDiscord />} me="md">
+                                Sign in
+                            </Button>
+                        )}
                     </Flex>
                 </>
             ) : (
