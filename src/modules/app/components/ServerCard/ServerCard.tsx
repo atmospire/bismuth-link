@@ -16,8 +16,8 @@ export function ServerCard({ server }: ServerCardOptions) {
     });
 
     return (
-        <Card>
-            <Flex align={"center"} justify={"space-between"}>
+        <Card w={"100%"}>
+            <Flex align={"center"} justify={"space-between"} w={"100%"}>
                 <Text c={"white"}>{server.serverIp}</Text>
                 <Text c={"white"}>
                     {serverStatus?.players?.online}/{serverStatus?.players?.max}
