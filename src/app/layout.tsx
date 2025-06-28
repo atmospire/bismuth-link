@@ -5,6 +5,7 @@ import "~/styles/globals.scss";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
+import { BottomMessage } from "~/modules";
 
 import { Layout } from "../modules/layout/components/Layout/Layout";
 import Providers from "./Providers";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <main>
                     <Providers>
                         <Layout>{children}</Layout>
+                        <BottomMessage />
                     </Providers>
                 </main>
             </body>
