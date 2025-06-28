@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { Button, Container, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
+import { Button, Container, Flex, Text, TextInput, Title } from "@mantine/core";
 import { Routes } from "~/constants/routes";
 import { DiscordLoginOverlay, MicrosoftLoginOverlay, ServerCard } from "~/modules";
 import { auth } from "~/server/auth";
@@ -25,6 +25,16 @@ async function unlinkMicrosoft(data: FormData) {
             id: account?.id,
             userId: userId,
             provider: "microsoft",
+        },
+    });
+
+    await db.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            javaName: "",
+            bedrockName: "",
         },
     });
 
@@ -97,11 +107,11 @@ export default async function LinkingPage() {
                         <Text>
                             These are the servers you are able to join and are automatically white-listed on them.
                         </Text>
-                        <SimpleGrid cols={2} spacing="md" verticalSpacing="md">
+                        <Flex wrap={"wrap"} gap={"md"} maw={"100%"}>
                             {servers.map((server, index) => (
                                 <ServerCard key={index} server={server.server} />
                             ))}
-                        </SimpleGrid>
+                        </Flex>
                     </Flex>
                 </Container>
             )}
