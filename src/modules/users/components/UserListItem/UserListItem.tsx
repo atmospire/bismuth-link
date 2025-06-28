@@ -15,7 +15,7 @@ export default function UserListItem({ user }: UserListItemOptions) {
     return (
         <Card>
             <Flex w={"100%"} align={"center"} gap={"sm"}>
-                <PunchableAvatar src={user?.image ?? ""} />
+                <PunchableAvatar soundUrl={"/sfx/punch.mp3"} scalar={2} src={user?.image ?? ""} />
                 <Flex direction={"column"}>
                     <Text fw={"600"}>{user?.name}</Text>
                     <Badge className={styles.roleBadge} size="xs" color={roleColor}>
