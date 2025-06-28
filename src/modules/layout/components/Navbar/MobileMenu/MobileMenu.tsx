@@ -23,7 +23,9 @@ export function MobileMenu() {
 
     return (
         <Menu withinPortal={false} opened={opened} onChange={setOpened}>
-            <Menu.Target>{opened ? <IconX size={"xl"} /> : <IconMenu2 size={"xl"} />}</Menu.Target>
+            <Menu.Target>
+                {opened ? <IconX color="white" size={32} /> : <IconMenu2 color="white" size={32} />}
+            </Menu.Target>
 
             <Menu.Dropdown>
                 {links(16).map((link, index) => (
