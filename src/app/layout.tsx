@@ -11,8 +11,8 @@ import { Layout } from "../modules/layout/components/Layout/Layout";
 import Providers from "./Providers";
 
 export const metadata: Metadata = {
-    title: "The Flower Garden",
-    description: "Welcome to the Flower Garden!",
+    title: "BismuthLink",
+    description: "The account link system for Bismuth Servers.",
     icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

@@ -13,19 +13,7 @@ interface LogoOptions {
 export function Logo({ goHomeOnClick = true }: LogoOptions) {
     const router = useRouter();
 
-    const title = process.env.NEXT_PUBLIC_APP_NAME ?? "flower";
-
-    // Should be a one in 143 chance
-    // const maxMiku = 143;
-    // const maxTeto = 401;
-    // const chance = Math.floor(Math.random() * maxMiku) + 1;
-    // const chanceTuah = Math.floor(Math.random() * maxTeto) + 1;
-    // if (chance === maxMiku) {
-    //     title = "Mikuseerr";
-    // }
-    // if (chanceTuah === maxTeto) {
-    //     title = "Tetoseerr";
-    // }
+    const title = process.env.NEXT_PUBLIC_APP_NAME ?? "Bismuth";
 
     return (
         <>

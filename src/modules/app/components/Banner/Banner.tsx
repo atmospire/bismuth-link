@@ -17,7 +17,7 @@ export function Banner() {
 
     return (
         <>
-            <BackgroundImage src={"/img/grask.webp"} h={"100%"}>
+            <BackgroundImage src={"/img/bismuth.webp"} h={"100%"}>
                 <Flex
                     w={"100%"}
                     h={"100%"}
@@ -26,7 +26,7 @@ export function Banner() {
                     justify={"center"}
                     align={"center"}
                 >
-                    <Text className={styles.title}>Welcome to the Flower Garden</Text>
+                    <Text className={styles.title}>Bismuth Link</Text>
                     {isLoading ? (
                         <Loader type="dots" />
                     ) : (
