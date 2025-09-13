@@ -16,10 +16,11 @@ datasource db {
 }
 
 model AllowedServer {
-    id                  String  @id @default(cuid())
-    serverIp            String
-    discordServerId     String
-    userServers         UserServer[]
+    id                      String  @id @default(cuid())
+    serverIp                String
+    discordServerId         String
+    pterodactylIdentifier   String
+    userServers             UserServer[]
 }
 
 model UserServer {
