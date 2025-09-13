@@ -158,6 +158,11 @@ export const authConfig = {
                 if (Object.keys(updateData).length > 0) {
                     await db.user.update({ where: { id: user.id }, data: updateData });
                 }
+
+                console.log("Whitelisting logged-in user on their servers!");
+                await fetch("/api/whitelist", {
+                    method: "POST",
+                });
             }
         },
         updateUser: async ({ user }) => {
