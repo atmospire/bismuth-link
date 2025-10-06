@@ -23,7 +23,7 @@ export async function POST() {
             const identifier = userver.server.pterodactylIdentifier;
 
             if (!isNullOrUndefined(session.user.javaName)) {
-                await fetch(`https://api.atmospire.dev/servers/${identifier}/command`, {
+                await fetch(`https://api.bismuth.win/servers/${identifier}/command`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export async function POST() {
             }
 
             if (!isNullOrUndefined(session.user.bedrockName)) {
-                await fetch(`https://api.atmospire.dev/servers/${identifier}/command`, {
+                await fetch(`https://api.bismuth.win/servers/${identifier}/command`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
